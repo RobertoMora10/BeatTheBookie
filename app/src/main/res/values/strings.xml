@@ -6,4 +6,6 @@
     <string name="No_User">Dont have a username? Register</string>
     <string name="register">Register</string>
     <string name="ConfirmPassword">Confirm Password</string>
+    <string name="CreateBet">Create a new bet</string>
+    <string name="GotoLeaderboard">See current bets</string>
 </resources>
