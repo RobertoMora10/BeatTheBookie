@@ -19,7 +19,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LeaderboardActivity" />
-        <activity android:name=".CreateBetActivity"></activity>
+        <activity android:name=".CreateBetActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
