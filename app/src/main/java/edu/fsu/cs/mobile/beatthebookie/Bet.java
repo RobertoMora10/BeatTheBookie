@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Bet {
 
+    private  String text;
     private int NumTeams;
     private Date TimeCreated;
     private Date ValidUntil;
@@ -16,7 +17,26 @@ public class Bet {
 
     public Bet()
     {
+        text="TEST";
         votes=0;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
+
+
 
 }
