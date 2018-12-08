@@ -1,10 +1,12 @@
 package edu.fsu.cs.mobile.beatthebookie;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Bet {
 
+    private String ID;
     private  String text;
     private int NumTeams;
     private Date TimeCreated;
@@ -19,6 +21,28 @@ public class Bet {
     {
         text="TEST";
         votes=0;
+    }
+
+    public Bet(String id,String text, double odds, String website)
+    {
+        this.ID=id;
+        this.text=text;
+        this.FinalOdds=odds;
+        this.Website=website;
+        this.TimeCreated= Calendar.getInstance().getTime();
+        this.votes=0;
+    }
+
+    public Date getTimeCreated() {
+        return TimeCreated;
+    }
+
+    public String getWebsite() {
+        return Website;
+    }
+
+    public double getFinalOdds() {
+        return FinalOdds;
     }
 
     public String getText() {
