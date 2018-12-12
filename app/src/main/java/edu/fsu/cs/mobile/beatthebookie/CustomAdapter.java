@@ -12,14 +12,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends ArrayAdapter<Bet> {
 
+    private boolean votedUP=false;
+    private  boolean votedDOWN=false;
     private Context mContext;
     private ArrayList<Bet> mBets;
-
+    DatabaseReference databaseBet;
 
 
     public CustomAdapter(@NonNull Context context, int resource)
@@ -32,6 +38,10 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
     private static class MyBetHolder {
         TextView textViewEntry;
         TextView textViewScore;
+        TextView textViewWebsite;
+        TextView textViewPayout;
+        TextView textViewUser;
+        TextView textViewValidUntil;
         ImageButton upButton;
         ImageButton downButton;
 
@@ -51,8 +61,55 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
             convertView = inflater.inflate(R.layout.row, parent, false);
             viewHolder.textViewEntry =(TextView) convertView.findViewById(R.id.entry);
             viewHolder.textViewScore=(TextView) convertView.findViewById(R.id.Score);
+            viewHolder.textViewWebsite =(TextView) convertView.findViewById(R.id.rowWebsite);
+            viewHolder.textViewPayout =(TextView) convertView.findViewById(R.id.rowPayout);
+            viewHolder.textViewUser =(TextView) convertView.findViewById(R.id.rowUser);
+            viewHolder.textViewValidUntil=(TextView) convertView.findViewById(R.id.rowValidUntil);
             viewHolder.upButton=(ImageButton) convertView.findViewById(R.id.upButton);
             viewHolder.downButton=(ImageButton) convertView.findViewById(R.id.downButton);
+
+            viewHolder.upButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(votedUP==false) {
+                        item.setVotes(item.getVotes() + 1);
+                        if(votedDOWN==true)
+                            item.setVotes(item.getVotes() + 1);
+                        votedUP=true;
+                        votedDOWN=false;
+
+                    }
+                    //Toast.makeText(mContext,String.valueOf(item.getVotes()),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
+                    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
+                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite());
+                    bet.setVotes(item.getVotes());
+                    databaseReference.setValue(bet);
+                    notifyDataSetChanged();
+
+                }
+            });
+
+            viewHolder.downButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(votedDOWN==false) {
+                        item.setVotes(item.getVotes() - 1);
+                        if(votedUP==true)
+                            item.setVotes(item.getVotes() - 1);
+                        votedDOWN=true;
+                        votedUP=false;
+
+                    }
+                    Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
+                    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
+                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite());
+                    bet.setVotes(item.getVotes());
+                    databaseReference.setValue(bet);
+                    notifyDataSetChanged();
+                }
+            });
             convertView.setTag(viewHolder);
         }
         else {
@@ -96,6 +153,7 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
         int idx = getPosition(object);
         if (idx >= 0) {
             mBets.set(idx, object);
+
         } else {
             mBets.add(object);
         }

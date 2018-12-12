@@ -8,4 +8,9 @@
     <string name="ConfirmPassword">Confirm Password</string>
     <string name="CreateBet">Create a new bet</string>
     <string name="GotoLeaderboard">See current bets</string>
+    <string-array name="SortOptions">
+        <item>Highest voted</item>
+        <item>Earliest</item>
+        <item>Closest to expiring</item>
+    </string-array>
 </resources>

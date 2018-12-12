@@ -33,6 +33,10 @@ public class Bet {
         this.votes=0;
     }
 
+    public String getID() {
+        return ID;
+    }
+
     public Date getTimeCreated() {
         return TimeCreated;
     }
@@ -61,6 +65,7 @@ public class Bet {
         this.votes = votes;
     }
 
-
-
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }

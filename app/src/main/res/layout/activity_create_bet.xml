@@ -49,10 +49,18 @@
         android:id="@+id/AddBetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="272dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginStart="148dp"
+        android:layout_marginBottom="140dp"
+        android:layout_marginLeft="204dp"
+        android:layout_marginStart="204dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/DateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="195dp" />
 </android.support.constraint.ConstraintLayout>
