@@ -110,6 +110,7 @@ public class CreateBetActivity extends AppCompatActivity implements DatePickerDi
                                  Creator = user1.getEmail();
                                     Bet bet1= new Bet(id,bet,Double.valueOf(payout),website,Creator,ValidStr);
                                     bet1.setCreator(Creator);
+                                    bet1.setCreatorID(UID);
                                     databaseBet.child(id).setValue(bet1);
 
                                 }
@@ -128,6 +129,8 @@ public class CreateBetActivity extends AppCompatActivity implements DatePickerDi
                     databaseBet.child(id).setValue(bet1);
 
                     Intent intent= new Intent(CreateBetActivity.this,LeaderboardActivity.class);
+
+                    intent.putExtra("q",0);
                     startActivity(intent);
                 }
                 else
@@ -178,7 +181,6 @@ public class CreateBetActivity extends AppCompatActivity implements DatePickerDi
         hourFinal=i;
         minuteFinal=i1;
         Valid= new GregorianCalendar(yearFinal,monthFinal,dayFinal,hourFinal,minuteFinal).getTime();
-        //Toast.makeText(CreateBetActivity.this,Valid.toString(),Toast.LENGTH_LONG).show();
 
         ValidStr=dateFormat.format(Valid);
         String syear=Integer.toString(yearFinal);
@@ -202,9 +204,7 @@ public class CreateBetActivity extends AppCompatActivity implements DatePickerDi
             e.printStackTrace();
         }
 
-        Toast.makeText(CreateBetActivity.this,Valid.toString(),Toast.LENGTH_LONG).show();
         Date currentTime= Calendar.getInstance().getTime();
-        Toast.makeText(CreateBetActivity.this,currentTime.toString(),Toast.LENGTH_LONG).show();
 
 
 

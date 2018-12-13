@@ -13,6 +13,7 @@ public class Bet {
     private String Website;
     private double FinalOdds;
     private String Creator;
+    private String CreatorID;
     private int votes;
 
     public Bet()
@@ -32,6 +33,14 @@ public class Bet {
         this.votes=0;
         this.Creator=creator;
         this.ValidUntil=Valid;
+    }
+
+    public String getCreatorID() {
+        return CreatorID;
+    }
+
+    public void setCreatorID(String creatorID) {
+        CreatorID = creatorID;
     }
 
     public String getCreator() {

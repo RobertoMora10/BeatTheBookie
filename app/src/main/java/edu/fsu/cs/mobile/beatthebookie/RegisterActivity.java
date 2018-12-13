@@ -22,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText mUser;
     EditText mPassword;
-    EditText mConfirm;
     Button button;
     private FirebaseAuth mAuth;
     DatabaseReference databaseBet;
@@ -33,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         mUser=(EditText) findViewById(R.id.RUsernameEdit);
         mPassword=(EditText) findViewById(R.id.RpasswordEdit);
-        mConfirm=(EditText) findViewById(R.id.ConfirmEdit);
         button=(Button) findViewById(R.id.button);
         mAuth=FirebaseAuth.getInstance();
 

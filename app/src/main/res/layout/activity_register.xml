@@ -10,30 +10,22 @@
         android:id="@+id/Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:text="@string/username"
         app:layout_constraintBottom_toTopOf="@+id/password"
-        tools:layout_editor_absoluteX="44dp" />
+        app:layout_constraintEnd_toStartOf="@+id/RUsernameEdit" />
 
     <TextView
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
         android:text="@string/password"
-        app:layout_constraintBottom_toTopOf="@+id/ConfirmPassword"
-        tools:layout_editor_absoluteX="60dp" />
-
-    <TextView
-        android:id="@+id/ConfirmPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="@string/ConfirmPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/ConfirmEdit" />
+        app:layout_constraintEnd_toStartOf="@+id/RpasswordEdit"
+        tools:layout_editor_absoluteY="274dp" />
 
     <Button
         android:id="@+id/button"
@@ -50,18 +42,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/ConfirmEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
         android:id="@+id/RUsernameEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +50,6 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/RpasswordEdit"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -78,11 +57,11 @@
         android:id="@+id/RpasswordEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="156dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/ConfirmEdit"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

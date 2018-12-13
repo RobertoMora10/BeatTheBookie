@@ -14,13 +14,21 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button createButton;
     private Button leaderboardButton;
+    private TextView textView;
     private FirebaseUser currentUser;
     private FirebaseAuth auth;
+    private String UserStr;
+    DatabaseReference databaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
+        databaseUser = FirebaseDatabase.getInstance().getReference("Users");
         createButton = (Button) findViewById(R.id.CreateBetButton);
         leaderboardButton=(Button)findViewById(R.id.LeaderboardButton);
+        textView=(TextView)findViewById(R.id.TextViewMain);
+        textView.setText("Welcome what would you like to do?");
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LeaderboardActivity.class);
+                intent.putExtra("q",0);
                 startActivity(intent);
 
             }

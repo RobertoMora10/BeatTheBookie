@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
@@ -25,11 +26,14 @@ import java.util.Date;
 public class LeaderboardActivity extends AppCompatActivity {
     private ListView list;
     private Button button;
+    private Button Refresh;
     private  CustomAdapter mAdapter;
     private Spinner mSpinner;
     DatabaseReference databaseBet;
     SimpleDateFormat dateFormat;
     Date date;
+    int querypos;
+    Query query;
 
 
 
@@ -37,6 +41,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+        querypos=getIntent().getExtras().getInt("q");
 
         dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
@@ -45,11 +50,21 @@ public class LeaderboardActivity extends AppCompatActivity {
         button=(Button) findViewById(R.id.button2);
         mAdapter = new CustomAdapter(LeaderboardActivity.this, R.layout.row);
         mSpinner=(Spinner)findViewById(R.id.spinner);
+        Refresh=(Button) findViewById(R.id.button3);
         list.setAdapter(mAdapter);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(LeaderboardActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(LeaderboardActivity.this, LeaderboardActivity.class);
+                intent.putExtra("q",querypos);
                 startActivity(intent);
             }
         });
@@ -63,16 +78,18 @@ public class LeaderboardActivity extends AppCompatActivity {
                 if(position==0)
                 {
                     //sort by votes
+                    querypos=0;
+
                 }
 
                 else if(position==1)
                 {
                     //sort by earliest
+                    querypos=1;
                 }
 
                 else
                 {
-                    //sort by expiration date
                 }
 
             }
@@ -93,7 +110,16 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        databaseBet.addValueEventListener(new ValueEventListener() {
+        doQuery();
+
+    }
+
+    private void doQuery() {
+        if(querypos==1)
+            query=databaseBet.orderByChild("votes");
+        else
+            query=databaseBet;
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -102,18 +128,15 @@ public class LeaderboardActivity extends AppCompatActivity {
                 {
                     Bet bet=betSnapshot.getValue(Bet.class);
                     try {
-                         date =dateFormat.parse(bet.getValidUntil());
-                         //Toast.makeText(LeaderboardActivity.this,date.toString(),Toast.LENGTH_LONG).show();
+                        date =dateFormat.parse(bet.getValidUntil());
 
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     Date currentTime= Calendar.getInstance().getTime();
-                    Toast.makeText(LeaderboardActivity.this,currentTime.toString(),Toast.LENGTH_LONG).show();
 
                     if(date.after(currentTime))
                         mAdapter.add(bet);
-                    // Toast.makeText(LeaderboardActivity.this,bet.getID(),Toast.LENGTH_LONG).show();
                 }
             }
 

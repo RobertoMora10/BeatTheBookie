@@ -33,6 +33,9 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
     DatabaseReference databaseUser;
     FirebaseAuth mAuth;
     private String Creator;
+    User usertemp;
+    int temp;
+    String tempID;
 
 
     public CustomAdapter(@NonNull Context context, int resource)
@@ -84,14 +87,17 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
 
                     if(votedUP==false) {
                         item.setVotes(item.getVotes() + 1);
-                        if(votedDOWN==true)
+                       // updateScore(+1, item);
+                        if(votedDOWN==true) {
                             item.setVotes(item.getVotes() + 1);
+                        //    updateScore(+1, item);
+                        }
                         votedUP=true;
                         votedDOWN=false;
 
+
                     }
-                    //Toast.makeText(mContext,String.valueOf(item.getVotes()),Toast.LENGTH_LONG).show();
-                    Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
+
                     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
                     Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite(),item.getCreator(), item.getValidUntil());
                     bet.setVotes(item.getVotes());
@@ -106,16 +112,20 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
                 public void onClick(View view) {
                     if(votedDOWN==false) {
                         item.setVotes(item.getVotes() - 1);
-                        if(votedUP==true)
+                        //updateScore(-1,item);
+                        if(votedUP==true) {
                             item.setVotes(item.getVotes() - 1);
+                            //updateScore(-1, item);
+                        }
+
                         votedDOWN=true;
                         votedUP=false;
 
                     }
-                    Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
                     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
                     Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite(),item.getCreator(), item.getValidUntil());
                     bet.setVotes(item.getVotes());
+                    bet.setCreatorID(item.getCreatorID());
                     databaseReference.setValue(bet);
                     notifyDataSetChanged();
                 }
@@ -123,7 +133,6 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
             convertView.setTag(viewHolder);
         }
         else {
-            // If row has been created, get viewHolder from tag
             viewHolder = (MyBetHolder) convertView.getTag();
         }
 
@@ -134,12 +143,48 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
         viewHolder.textViewUser.setText(item.getCreator());
 
 
-        //still have to set the buttons
 
         return convertView;
 
     }
+/*
+    private void updateScore(final int i, final Bet item) {
+        Toast.makeText(mContext,item.getCreatorID(),Toast.LENGTH_LONG).show();
+        final String UID= item.getCreatorID();
+        temp=0;
 
+        databaseUser.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+
+               for(DataSnapshot betSnapshot: dataSnapshot.getChildren())
+               {
+                    usertemp=betSnapshot.getValue(User.class);
+                   if(usertemp.getID().equals(item.getCreatorID())) {
+                       {
+                           temp = usertemp.getPoints();
+                           Toast.makeText(mContext,UID,Toast.LENGTH_LONG).show();
+                       }
+
+                   }
+
+               }
+
+           }
+
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
+
+
+
+        //databaseUser.child(UID).child("points").setValue(temp+i);
+    }
+
+*/
     @Override
     public int getCount() {
         return mBets.size();
@@ -154,7 +199,6 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
 
     @Override
     public int getPosition(@Nullable Bet item) {
-        // Find if item is already in mObjects by checking text
         for (int i = 0; i < mBets.size(); i++) {
             if (TextUtils.equals(item.getText(), mBets.get(i).getText())) {
                 return i;

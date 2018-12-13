@@ -14,8 +14,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="Bet"
         android:inputType="textPersonName"
-        android:text="Bet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,8 +27,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="Payout"
         android:inputType="textPersonName"
-        android:text="Payout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BetEdit" />
 
@@ -40,8 +40,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="Website"
         android:inputType="textPersonName"
-        android:text="Website"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PayoutEdit" />
 
@@ -49,10 +49,10 @@
         android:id="@+id/AddBetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
-        android:layout_marginLeft="204dp"
-        android:layout_marginStart="204dp"
-        android:text="Button"
+        android:layout_marginBottom="124dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginStart="148dp"
+        android:text="@string/CreateBet1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,10 +60,10 @@
         android:id="@+id/DateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="52dp"
-        android:text="Button"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/ValidUntil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WebsiteEdit" />
 </android.support.constraint.ConstraintLayout>
