@@ -17,12 +17,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class LeaderboardActivity extends AppCompatActivity {
     private ListView list;
     private Button button;
     private  CustomAdapter mAdapter;
     private Spinner mSpinner;
     DatabaseReference databaseBet;
+    SimpleDateFormat dateFormat;
+    Date date;
 
 
 
@@ -30,6 +37,8 @@ public class LeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
+
+        dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
         databaseBet = FirebaseDatabase.getInstance().getReference("bets");
         list = (ListView) findViewById(R.id.listview);
@@ -92,7 +101,18 @@ public class LeaderboardActivity extends AppCompatActivity {
                 for(DataSnapshot betSnapshot: dataSnapshot.getChildren())
                 {
                     Bet bet=betSnapshot.getValue(Bet.class);
-                    mAdapter.add(bet);
+                    try {
+                         date =dateFormat.parse(bet.getValidUntil());
+                         //Toast.makeText(LeaderboardActivity.this,date.toString(),Toast.LENGTH_LONG).show();
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Date currentTime= Calendar.getInstance().getTime();
+                    Toast.makeText(LeaderboardActivity.this,currentTime.toString(),Toast.LENGTH_LONG).show();
+
+                    if(date.after(currentTime))
+                        mAdapter.add(bet);
                     // Toast.makeText(LeaderboardActivity.this,bet.getID(),Toast.LENGTH_LONG).show();
                 }
             }

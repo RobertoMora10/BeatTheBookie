@@ -73,17 +73,16 @@
         app:layout_constraintTop_toBottomOf="@+id/entry" />
 
     <TextView
-        android:id="@+id/rowUser"
+        android:id="@+id/rowValidUntil"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
-        android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/Score"
         app:layout_constraintTop_toBottomOf="@+id/rowWebsite" />
 
     <TextView
-        android:id="@+id/rowValidUntil"
+        android:id="@+id/rowUser"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"

@@ -8,22 +8,21 @@ public class Bet {
 
     private String ID;
     private  String text;
-    private int NumTeams;
     private Date TimeCreated;
-    private Date ValidUntil;
+    private String ValidUntil;
     private String Website;
     private double FinalOdds;
-    private ArrayList<String> Lines;
-    private ArrayList<Integer> Prices;
+    private String Creator;
     private int votes;
 
     public Bet()
     {
+        Website="TEEEEST";
         text="TEST";
         votes=0;
     }
 
-    public Bet(String id,String text, double odds, String website)
+    public Bet(String id,String text, double odds, String website, String creator,String Valid)
     {
         this.ID=id;
         this.text=text;
@@ -31,6 +30,16 @@ public class Bet {
         this.Website=website;
         this.TimeCreated= Calendar.getInstance().getTime();
         this.votes=0;
+        this.Creator=creator;
+        this.ValidUntil=Valid;
+    }
+
+    public String getCreator() {
+        return Creator;
+    }
+
+    public void setCreator(String creator) {
+        Creator = creator;
     }
 
     public String getID() {
@@ -53,16 +62,38 @@ public class Bet {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public int getVotes() {
         return votes;
     }
 
+    public String getValidUntil() {
+        return ValidUntil;
+    }
+
+    public void setFinalOdds(double finalOdds) {
+        FinalOdds = finalOdds;
+    }
+
+    public void setTimeCreated(Date timeCreated) {
+        TimeCreated = timeCreated;
+    }
+
+    public void setValidUntil(String validUntil) {
+        ValidUntil = validUntil;
+    }
+
+    public void setWebsite(String website) {
+        Website = website;
+    }
+
+
+
     public void setVotes(int votes) {
         this.votes = votes;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void setID(String ID) {

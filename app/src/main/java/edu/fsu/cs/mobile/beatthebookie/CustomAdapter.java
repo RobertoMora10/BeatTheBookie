@@ -2,6 +2,7 @@ package edu.fsu.cs.mobile.beatthebookie;
 
 import android.content.Context;
 import android.media.Image;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -14,8 +15,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -25,7 +30,9 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
     private  boolean votedDOWN=false;
     private Context mContext;
     private ArrayList<Bet> mBets;
-    DatabaseReference databaseBet;
+    DatabaseReference databaseUser;
+    FirebaseAuth mAuth;
+    private String Creator;
 
 
     public CustomAdapter(@NonNull Context context, int resource)
@@ -59,6 +66,9 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
             viewHolder = new MyBetHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row, parent, false);
+            mAuth=FirebaseAuth.getInstance();
+            databaseUser = FirebaseDatabase.getInstance().getReference("Users");
+
             viewHolder.textViewEntry =(TextView) convertView.findViewById(R.id.entry);
             viewHolder.textViewScore=(TextView) convertView.findViewById(R.id.Score);
             viewHolder.textViewWebsite =(TextView) convertView.findViewById(R.id.rowWebsite);
@@ -83,7 +93,7 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
                     //Toast.makeText(mContext,String.valueOf(item.getVotes()),Toast.LENGTH_LONG).show();
                     Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
                     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
-                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite());
+                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite(),item.getCreator(), item.getValidUntil());
                     bet.setVotes(item.getVotes());
                     databaseReference.setValue(bet);
                     notifyDataSetChanged();
@@ -104,7 +114,7 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
                     }
                     Toast.makeText(mContext,item.getID(),Toast.LENGTH_LONG).show();
                     DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("bets").child(item.getID());
-                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite());
+                    Bet bet = new Bet(item.getID(),item.getText(),item.getFinalOdds(),item.getWebsite(),item.getCreator(), item.getValidUntil());
                     bet.setVotes(item.getVotes());
                     databaseReference.setValue(bet);
                     notifyDataSetChanged();
@@ -119,6 +129,11 @@ public class CustomAdapter extends ArrayAdapter<Bet> {
 
         viewHolder.textViewEntry.setText(item.getText());
         viewHolder.textViewScore.setText(String.valueOf( item.getVotes()));
+        viewHolder.textViewPayout.setText("@"+String.valueOf(item.getFinalOdds()));
+        viewHolder.textViewWebsite.setText("Website: "+item.getWebsite());
+        viewHolder.textViewUser.setText(item.getCreator());
+
+
         //still have to set the buttons
 
         return convertView;

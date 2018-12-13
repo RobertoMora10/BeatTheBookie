@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mConfirm;
     Button button;
     private FirebaseAuth mAuth;
-
+    DatabaseReference databaseBet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
         mConfirm=(EditText) findViewById(R.id.ConfirmEdit);
         button=(Button) findViewById(R.id.button);
         mAuth=FirebaseAuth.getInstance();
+
+        databaseBet= FirebaseDatabase.getInstance().getReference();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void CreateAccount()
     {
-        String email = mUser.getText().toString();
+        final String email = mUser.getText().toString();
         String password = mPassword.getText().toString();
 
         if(TextUtils.isEmpty(email))
@@ -65,7 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     if(task.isSuccessful())
                     {
-                         Toast.makeText(RegisterActivity.this,"Success!",Toast.LENGTH_LONG).show();
+                        FirebaseUser Fuser = mAuth.getCurrentUser();
+                        User user = new User(Fuser.getUid(),  email, 0);
+                        databaseBet.child("Users").child(Fuser.getUid()).setValue(user);
+
+                        Toast.makeText(RegisterActivity.this,"Success!",Toast.LENGTH_LONG).show();
                          Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                          startActivity(intent);
                     }

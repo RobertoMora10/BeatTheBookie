@@ -84,8 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.Signout:
+                FirebaseAuth.getInstance().signOut();
                 Toast.makeText( this, "Goodbye!", Toast.LENGTH_LONG).show();
-                finish();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
 
